@@ -1,30 +1,60 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+	<ion-app>
+		<ion-router-outlet />
+		<div class="container">
+			<router-view />
+		</div>
+
+		<ion-page>
+		<ion-tabs @ionTabsWillChange="beforeTabChange" @ionTabsDidChange="afterTabChange">
+			<ion-tab-bar slot="bottom">
+			<ion-tab-button tab="schedule" href="/tabs/schedule">
+				<ion-icon :icon="calendar"></ion-icon>
+				<ion-label>Schedule</ion-label>
+				<ion-badge>6</ion-badge>
+			</ion-tab-button>
+
+			<ion-tab-button tab="speakers" href="/tabs/speakers">
+				<ion-icon :icon="personCircle"></ion-icon>
+				<ion-label>Speakers</ion-label>
+			</ion-tab-button>
+			</ion-tab-bar>
+		</ion-tabs>
+		</ion-page>
+	</ion-app>
+
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+	import { defineComponent } from 'vue';
+	import {
+		IonIcon,
+		IonLabel,
+		IonPage,
+		IonTabBar,
+		IonTabButton,
+		IonTabs,
+		IonApp,
+		IonRouterOutlet
+	} from '@ionic/vue';
+	import { calendar, personCircle } from 'ionicons/icons';
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+	export default defineComponent({
+		name: 'App',
+		components: { IonIcon, IonLabel, IonPage, IonTabBar, IonTabButton, IonTabs, IonApp, IonRouterOutlet },
+		setup() {
+			const beforeTabChange = () => {
+				// do something before tab change
+			}
+			const afterTabChange = () => {
+				// do something after tab change
+			}
+			return {
+				calendar,
+				personCircle,
+				beforeTabChange,
+				afterTabChange
+			}
+		}
+	});
+</script>
