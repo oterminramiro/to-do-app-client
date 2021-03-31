@@ -1,75 +1,56 @@
 <template>
-	<ion-card>
-		<ion-card-header>
-			<img
-				id="profile-img"
-				src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-				class="profile-img-card"
-			/>
-			<ion-card-title>Register</ion-card-title>
-		</ion-card-header>
-		<ion-card-content>
+	<ion-row class="ion-justify-content-center ion-text-center">
+		<ion-col size="4">
+			<ion-img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"></ion-img>
+			<h2>Register</h2>
 			<form name="form" v-on:submit.prevent="onSubmit">
-				<div class="form-group">
-					<label for="email">Email</label>
-					<input
-					v-model="email"
-					type="text"
-					class="form-control"
-					name="email"
-					/>
-				</div>
-				<div class="form-group">
-					<label for="phone">Phone</label>
-					<input
-					v-model="phone"
-					type="text"
-					class="form-control"
-					name="phone"
-					/>
-				</div>
-				<div class="form-group">
-					<label for="name">name</label>
-					<input
-					v-model="name"
-					type="text"
-					class="form-control"
-					name="name"
-					/>
-				</div>
-				<div class="form-group">
-					<label for="lastname">lastname</label>
-					<input
-					v-model="lastname"
-					type="text"
-					class="form-control"
-					name="lastname"
-					/>
-				</div>
-				<div class="form-group">
-					<label for="password">Password</label>
-					<input
-					v-model="password"
-					type="password"
-					class="form-control"
-					name="password"
-					/>
-				</div>
-				<div class="form-group">
-					<ion-button fill="solid" type="submit">
-						<span v-show="loading" class="spinner-border spinner-border-sm"></span>
-						<span>Register</span>
-					</ion-button>
-				</div>
-				<div class="form-group">
-					<div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
-				</div>
+				<ion-item>
+					<ion-label position="floating">Phone</ion-label>
+					<ion-input v-model="phone" name="phone" type="text"></ion-input>
+				</ion-item>
+
+				<ion-item>
+					<ion-label position="floating">Email</ion-label>
+					<ion-input v-model="email" name="email" type="text"></ion-input>
+				</ion-item>
+
+				<ion-item>
+					<ion-label position="floating">Name</ion-label>
+					<ion-input v-model="name" name="name" type="text"></ion-input>
+				</ion-item>
+
+				<ion-item>
+					<ion-label position="floating">Lastname</ion-label>
+					<ion-input v-model="lastname" name="lastname" type="text"></ion-input>
+				</ion-item>
+
+				<ion-item>
+					<ion-label position="floating">Password</ion-label>
+					<ion-input v-model="password" name="password" type="password"></ion-input>
+				</ion-item>
+
+				<ion-button fill="solid" type="submit" expand="block" class="ion-margin-top">
+					<ion-spinner v-show="loading" name="crescent"></ion-spinner>
+					<span>Register</span>
+				</ion-button>
 			</form>
-		</ion-card-content>
-	</ion-card>
+		</ion-col>
+	</ion-row>
 </template>
 
 <script>
+
+import {
+	IonRow,
+	IonCol,
+	IonImg,
+	IonItem,
+	IonButton,
+	IonLabel,
+	IonInput,
+	toastController
+} from '@ionic/vue';
+
 export default {
 	name: 'Register',
 	data() {
@@ -81,7 +62,7 @@ export default {
 			password: '',
 			submitted: false,
 			successful: false,
-			message: ''
+			loading: false,
 		};
 	},
 	computed: {
@@ -94,10 +75,28 @@ export default {
 			// this.$router.push('/profile');
 		}
 	},
+	components: {
+		IonRow,
+		IonCol,
+		IonImg,
+		IonItem,
+		IonButton,
+		IonLabel,
+		IonInput
+	},
 	methods: {
+		async showToast (text) {
+			const toast = await toastController.create({
+				message: text,
+				duration: 2000,
+				color: "danger",
+				showCloseButton: true,
+			})
+			await toast.present();
+		},
 		onSubmit() {
-			this.message = '';
 			this.submitted = true;
+			this.loading = true;
 
 			let user = new Object();
 			user.phone = this.phone;
@@ -108,17 +107,16 @@ export default {
 
 			this.$store.dispatch('auth/register', user).then(
 				data => {
+					this.loading = false;
 					this.successful = true;
 					this.$router.push('/login');
 				},
 				error => {
-					this.message =
-					(error.response && error.response.data) ||
-					error.message ||
-					error.toString();
+					this.showToast(error.response.data.data)
 					this.successful = false;
 				}
 			);
+			this.loading = false;
 		}
 	}
 };
