@@ -1,48 +1,40 @@
 <template>
-	<ion-card>
-		<ion-card-header>
-			<img
-				id="profile-img"
-				src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-				class="profile-img-card"
-			/>
-			<ion-card-title>Login</ion-card-title>
-		</ion-card-header>
-		<ion-card-content>
+	<ion-row class="ion-justify-content-center ion-text-center">
+		<ion-col size="4">
+			<ion-img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png"></ion-img>
+			<h2>Login</h2>
 			<form name="form" v-on:submit.prevent="onSubmit">
-				<div class="form-group">
-					<label for="username">Email or Phone</label>
-					<input
-					v-model="username"
-					type="text"
-					class="form-control"
-					name="username"
-					/>
-				</div>
-				<div class="form-group">
-					<label for="password">Password</label>
-					<input
-					v-model="password"
-					type="password"
-					class="form-control"
-					name="password"
-					/>
-				</div>
-				<div class="form-group">
-					<ion-button fill="solid" type="submit">
-						<span v-show="loading" class="spinner-border spinner-border-sm"></span>
-						<span>Login</span>
-					</ion-button>
-				</div>
-				<div class="form-group">
-					<div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
-				</div>
+				<ion-item>
+					<ion-label position="floating">Email or Phone</ion-label>
+					<ion-input v-model="username" name="username" type="text"></ion-input>
+				</ion-item>
+
+				<ion-item>
+					<ion-label position="floating">Password</ion-label>
+					<ion-input v-model="password" name="password" type="password"></ion-input>
+				</ion-item>
+
+				<ion-button fill="solid" type="submit" expand="block" class="ion-margin-top">
+					<ion-spinner v-show="loading" name="crescent"></ion-spinner>
+					<span>Login</span>
+				</ion-button>
 			</form>
-		</ion-card-content>
-	</ion-card>
+		</ion-col>
+	</ion-row>
 </template>
 
 <script>
+
+import {
+	IonRow,
+	IonCol,
+	IonImg,
+	IonItem,
+	IonButton,
+	IonLabel,
+	IonInput,
+	toastController
+} from '@ionic/vue';
 
 export default {
 	name: 'Login',
@@ -51,15 +43,31 @@ export default {
 			username: null,
 			password: null,
 			loading: false,
-			message: '',
-			errors: []
 		};
 	},
+	components: {
+		IonRow,
+		IonCol,
+		IonImg,
+		IonItem,
+		IonButton,
+		IonLabel,
+		IonInput
+	},
 	methods: {
+		async showToast (text) {
+			const toast = await toastController.create({
+				message: text,
+				duration: 2000,
+				color: "danger",
+				showCloseButton: true,
+			})
+			await toast.present();
+		},
 		onSubmit(e) {
+			this.errors = []
 			this.loading = true;
 			if (this.username && this.password) {
-
 				let customer = new Object();
 				customer.username = this.username;
 				customer.password = this.password;
@@ -70,18 +78,15 @@ export default {
 					},
 					error => {
 						this.loading = false;
-						this.message =
-						(error.response && error.response.data) ||
-						error.message ||
-						error.toString();
+						this.showToast(error.response.data.data)
 					}
 				);
 			}
 			if (!this.username) {
-				this.errors.push('El username es obligatorio.');
+				this.showToast('Missing username')
 			}
 			if (!this.password) {
-				this.errors.push('La password es obligatoria.');
+				this.showToast('Missing password')
 			}
 			this.loading = false;
 			return;
