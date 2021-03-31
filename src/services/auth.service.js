@@ -27,6 +27,9 @@ class AuthService {
 			lastname: user.lastname,
 			email: user.email,
 			password: user.password
+		})
+		.then(response => {
+			return response.data.data;
 		});
 	}
 }
