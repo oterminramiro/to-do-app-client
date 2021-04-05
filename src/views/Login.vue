@@ -45,6 +45,16 @@ export default {
 			loading: false,
 		};
 	},
+	computed: {
+		loggedIn() {
+			return this.$store.state.auth.status.loggedIn;
+		}
+	},
+	mounted() {
+		if (this.loggedIn) {
+			this.$router.push('/');
+		}
+	},
 	components: {
 		IonRow,
 		IonCol,
@@ -74,7 +84,7 @@ export default {
 
 				this.$store.dispatch('auth/login', customer).then(
 					() => {
-						this.$router.push('/profile');
+						this.$router.push('/');
 					},
 					error => {
 						this.loading = false;

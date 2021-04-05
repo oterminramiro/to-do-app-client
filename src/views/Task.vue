@@ -4,16 +4,20 @@
 
 			<ion-button href="/new_task" shape="round" v-on:click="createTask">New task</ion-button>
 
-			<ion-card v-for="task in tasks" style="background-color: {{card.color}}">
+			<ion-row>
+				<ion-col v-for="task in tasks" size="4">
+					<ion-card style="background-color: {{card.color}}">
+						<ion-card-header>
+							<ion-card-title>{{task.Name}}</ion-card-title>
+						</ion-card-header>
 
-				<ion-card-header>
-					<ion-card-title>{{task.Name}}</ion-card-title>
-				</ion-card-header>
+						<ion-card-content>
+							{{task.Description}}
+						</ion-card-content>
+					</ion-card>
+				</ion-col>
+			</ion-row>
 
-				<ion-card-content>
-					{{task.Description}}
-				</ion-card-content>
-			</ion-card>
 		</ion-col>
 	</ion-row>
 </template>
@@ -53,18 +57,17 @@ export default {
 		};
 	},
 	computed: {
-		currentUser() {
-			return this.$store.state.auth.user;
+		loggedIn() {
+			return this.$store.state.auth.status.loggedIn;
 		}
 	},
 	mounted() {
-		if (!this.currentUser) {
+		if (!this.loggedIn) {
 			this.$router.push('/login');
 		}
 		TaskService.getTasks().then(
 			response => {
 				this.tasks = response.data.data;
-				console.log(response.data.data)
 			},
 			error => {
 				this.content =

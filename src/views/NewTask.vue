@@ -77,8 +77,8 @@
 			}
 		},
 		mounted() {
-			if (this.loggedIn) {
-				// this.$router.push('/profile');
+			if (!this.loggedIn) {
+				this.$router.push('/login');
 			}
 		},
 		components: {
@@ -113,13 +113,14 @@
 				if(this.pinned) task.Pinned = this.pinned;
 				if(this.date) task.Date = this.date;
 
-				console.log(task)
 				TaskService.createTask(task).then(
 					response => {
-						console.log(response.data.data)
+						// console.log(response.data.data)
+						this.$router.push('/');
 					},
 					error => {
-						console.log(error)
+						// console.log(error)
+						this.showToast(error.response.data)
 					}
 				);
 				this.loading = false;
