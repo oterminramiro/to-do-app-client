@@ -25,7 +25,7 @@ const router = createRouter({
 			component: Login
 		},
 		{
-			path: '/new_tasks',
+			path: '/new_task',
 			component: NewTask
 		},
 		{

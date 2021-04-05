@@ -2,8 +2,7 @@
 	<ion-row class="ion-justify-content-center ion-text-center">
 		<ion-col size="8">
 
-			<ion-button shape="round" v-on:click="createTask">New task</ion-button>
-			 <ion-button @click="openModal">Open Modal</ion-button>
+			<ion-button href="/new_task" shape="round" v-on:click="createTask">New task</ion-button>
 
 			<ion-card v-for="task in tasks" style="background-color: {{card.color}}">
 
@@ -17,15 +16,6 @@
 			</ion-card>
 		</ion-col>
 	</ion-row>
-
-
-	<ion-modal
-	    :is-open="isOpenRef"
-	    css-class="my-custom-class"
-	    @onDidDismiss="setOpen(false)"
-	>
-	    <Modal :data="data"></Modal>
-	</ion-modal>
 </template>
 
 <script>
@@ -43,7 +33,6 @@ import {
 	IonList,
 	modalController
 } from '@ionic/vue';
-import Modal from './Modal.vue'
 
 export default {
 	name: 'Task',
@@ -61,7 +50,6 @@ export default {
 	data() {
 		return {
 			tasks: '',
-			isOpenRef: true,
 		};
 	},
 	computed: {
@@ -87,16 +75,6 @@ export default {
 		);
 	},
 	methods: {
-		createTask(){
-			console.log('click')
-		},
-		async openModal() {
-			const modal = await modalController
-			.create({
-				component: Modal
-			})
-			return modal.present();
-		},
 	}
 };
 </script>
