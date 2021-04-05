@@ -1,39 +1,33 @@
 <template>
-	<div class="container">
-		<router-view />
-	</div>
+	<ion-page>
+		<ion-header>
+			<ion-toolbar>
+				<ion-title>Home</ion-title>
+			</ion-toolbar>
+		</ion-header>
+		<ion-content class="ion-padding">
+			<router-view />
+		</ion-content>
+	</ion-page>
 </template>
 
 <script>
-	import { defineComponent } from 'vue';
 	import {
-		IonIcon,
-		IonLabel,
+		IonContent,
+		IonHeader,
 		IonPage,
-		IonTabBar,
-		IonTabButton,
-		IonTabs,
-		IonApp,
-		IonRouterOutlet
+		IonTitle,
+		IonToolbar
 	} from '@ionic/vue';
-	import { calendar, personCircle } from 'ionicons/icons';
+	import { defineComponent } from 'vue';
 
 	export default defineComponent({
-		name: 'App',
-		components: { IonIcon, IonLabel, IonPage, IonTabBar, IonTabButton, IonTabs, IonApp, IonRouterOutlet },
-		setup() {
-			const beforeTabChange = () => {
-				// do something before tab change
-			}
-			const afterTabChange = () => {
-				// do something after tab change
-			}
-			return {
-				calendar,
-				personCircle,
-				beforeTabChange,
-				afterTabChange
-			}
+		components: {
+			IonContent,
+			IonHeader,
+			IonPage,
+			IonTitle,
+			IonToolbar
 		}
 	});
 </script>
