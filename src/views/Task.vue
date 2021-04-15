@@ -1,11 +1,10 @@
 <template>
 	<ion-row class="ion-justify-content-center ion-text-center">
-		<ion-col size="8">
-
+		<ion-col size="10">
 			<ion-button href="/new_task" shape="round" v-on:click="createTask">New task</ion-button>
 
 			<ion-row>
-				<ion-col v-for="task in tasks" size="4">
+				<ion-col v-for="task in tasks" size="12" size-sm="12" size-md="6" size-lg="4" size-xl="4">
 					<ion-card style="background-color: {{card.color}}">
 						<ion-card-header>
 							<ion-card-title>{{task.Name}}</ion-card-title>
@@ -26,10 +25,14 @@
 
 import TaskService from '../services/task.service';
 import {
+	IonRow,
+	IonCol,
+	IonButton,
 	IonCard,
 	IonCardContent,
 	IonCardSubtitle,
 	IonCardTitle,
+	IonCardHeader,
 	IonIcon,
 	IonItem,
 	IonLabel,
@@ -41,10 +44,14 @@ import {
 export default {
 	name: 'Task',
 	components: {
+		IonRow,
+		IonCol,
+		IonButton,
 		IonCard,
 		IonCardContent,
 		IonCardSubtitle,
 		IonCardTitle,
+		IonCardHeader,
 		IonIcon,
 		IonItem,
 		IonLabel,
