@@ -1,9 +1,7 @@
 <template>
-	<ion-page>
-		<ion-content class="ion-padding">
-			<router-view />
-		</ion-content>
-	</ion-page>
+	<div>
+		<router-view id="main"/>
+	</div>
 </template>
 
 <script>
