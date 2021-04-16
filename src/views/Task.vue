@@ -4,7 +4,7 @@
 		<ion-content id="main" >
 				<ion-row class="ion-justify-content-center ion-text-center">
 					<ion-col size="10">
-						<ion-button href="/new_task" shape="round" v-on:click="createTask">New task</ion-button>
+						<ion-button href="/new_task" shape="round">New task</ion-button>
 						<ion-row>
 							<ion-col v-for="task in tasks" size="12" size-sm="12" size-md="6" size-lg="4" size-xl="4">
 								<ion-card style="background-color: {{card.color}}">
@@ -43,6 +43,7 @@
 		IonLabel,
 		IonListHeader,
 		IonList,
+		IonContent,
 		modalController
 	} from '@ionic/vue';
 
@@ -63,6 +64,7 @@
 			IonLabel,
 			IonListHeader,
 			IonList,
+			IonContent,
 			Nav,
 		},
 		data() {

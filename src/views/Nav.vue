@@ -1,24 +1,31 @@
 <template>
 	<ion-toolbar>
-		<ion-buttons slot="start" :class="pageTitle != 'Home' ? 'w-100' : ''" >
-			<ion-back-button></ion-back-button>
+		<ion-buttons slot="start">
 			<ion-menu-button
-				menu="main-menu"
+				menuId="first"
 				autoHide="false"
-				:class="pageTitle != 'Home' ? 'menu-right' : ''"
 			></ion-menu-button>
 		</ion-buttons>
 	</ion-toolbar>
 
-	<ion-menu menuId="main-menu" content-id="main" type="overlay">
+	<ion-menu menuId="first" content-id="main" type="overlay">
 		<ion-header>
 			<ion-toolbar color="primary">
-				<ion-title>Start Menu</ion-title>
+				<ion-title>Menu</ion-title>
 			</ion-toolbar>
 		</ion-header>
 		<ion-content>
 			<ion-list>
-				<ion-item name="mail" slot="start">Menu Item</ion-item>
+				<ion-item name="home" slot="start" href="/">
+					<ion-label>
+						Home
+					</ion-label>
+				</ion-item>
+				<ion-item name="logout" slot="start" href="/logout">
+					<ion-label>
+						Logout
+					</ion-label>
+				</ion-item>
 			</ion-list>
 		</ion-content>
 	</ion-menu>
@@ -56,13 +63,6 @@
 				menuController.enable(true, 'first');
 				menuController.open('first');
 			},
-			openEnd() {
-				menuController.open('end');
-			},
-			openCustom() {
-				menuController.enable(true, 'custom');
-				menuController.open('custom');
-			}
 		}
 	});
 </script>
