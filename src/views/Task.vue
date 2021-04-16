@@ -7,7 +7,7 @@
 						<ion-button href="/new_task" shape="round">New task</ion-button>
 						<ion-row>
 							<ion-col v-for="task in tasks" size="12" size-sm="12" size-md="6" size-lg="4" size-xl="4">
-								<ion-card style="background-color: {{card.color}}">
+								<ion-card :style="{ backgroundColor: task.Color }">
 									<ion-card-header>
 										<ion-card-title>{{task.Name}}</ion-card-title>
 									</ion-card-header>
