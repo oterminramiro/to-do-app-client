@@ -41,6 +41,7 @@
 		IonTitle,
 		IonList,
 		IonItem,
+		IonLabel,
 		IonContent,
 		menuController
 	} from '@ionic/vue';
@@ -56,6 +57,7 @@
 			IonTitle,
 			IonList,
 			IonItem,
+			IonLabel,
 			IonContent,
 		},
 		methods: {
